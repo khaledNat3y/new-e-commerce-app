@@ -1,0 +1,85 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../theming/app_colors.dart';
+import '../theming/font_weight_helper.dart';
+
+class CustomTextField extends StatelessWidget {
+  final String? hintText;
+  final Widget? suffixIcon;
+  final double? width;
+  final bool? obscureText;
+  final TextInputType? inputType;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final void Function(String)? onChanged;
+  final void Function(String)? onFieldSubmitted;
+  final Color? fillColor;
+  final int? maxLines;
+  final double? height;
+
+  const CustomTextField({
+    super.key,
+    required this.hintText,
+    this.suffixIcon,
+    this.width,
+    this.obscureText,
+    this.inputType,
+    this.validator,
+    this.controller,
+    this.fillColor,
+    this.maxLines,
+    this.height, this.onChanged, this.onFieldSubmitted,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width ?? 331.w,
+      height: height ?? 48.h,
+      child: TextFormField(
+        controller: controller,
+        onChanged: onChanged,
+        onFieldSubmitted: onFieldSubmitted,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        cursorColor: AppColors.primaryColor,
+        cursorErrorColor: AppColors.errorColor,
+        obscureText: obscureText ?? false,
+        keyboardType: inputType,
+        validator: validator,
+        maxLines: maxLines ?? 1,
+        decoration: InputDecoration(
+          maintainHintHeight: true,
+          hintText: hintText ?? "",
+          hintStyle: TextStyle(
+            fontSize: 15.sp,
+            color: AppColors.black,
+            fontWeight: FontWeightHelper.medium,
+          ),
+          suffixIcon: suffixIcon,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 18.w,
+            vertical: 18.h,
+          ),
+          enabled: true,
+          enabledBorder: buildOutlineInputBorder(),
+          focusedBorder: buildOutlineInputBorder(),
+          errorBorder: buildOutlineInputBorder(color: AppColors.errorColor),
+          focusedErrorBorder: buildOutlineInputBorder(
+            color: AppColors.errorColor,
+          ),
+          filled: true,
+          fillColor: fillColor ?? const Color(0xffF7F8F9),
+        ),
+      ),
+    );
+  }
+
+  OutlineInputBorder buildOutlineInputBorder({Color? color}) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8.r),
+      borderSide: BorderSide(color: color ?? AppColors.lightGrey, width: 1.w),
+    );
+  }
+}
