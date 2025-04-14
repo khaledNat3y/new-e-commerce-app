@@ -15,5 +15,5 @@ class SharedPrefKeys {
 }
 
 class AppFonts {
-  static const String primaryFont = "inter";
+  static const String primaryFont = "Readex Pro";
 }

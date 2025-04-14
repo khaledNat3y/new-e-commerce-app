@@ -1,16 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:new_e_commerce_app/core/routing/routes.dart';
+import 'package:new_e_commerce_app/features/login_screen/ui/login_screen.dart';
 
 
 class AppRouter {
   static GoRouter goRouter = GoRouter(
-    initialLocation: Routes.homeScreen,
+    initialLocation: Routes.loginScreen,
     routes: [
       GoRoute(
-        name: Routes.homeScreen,
-        path: Routes.homeScreen,
-        builder: (context, state) => Container(),
+        name: Routes.loginScreen,
+        path: Routes.loginScreen,
+        builder: (context, state) => LoginScreen(),
       ),
 
 
