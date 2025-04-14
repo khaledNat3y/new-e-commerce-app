@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../theming/app_colors.dart';
@@ -7,6 +6,7 @@ import '../theming/font_weight_helper.dart';
 
 class CustomTextField extends StatelessWidget {
   final String? hintText;
+  final TextStyle? hintStyle;
   final Widget? suffixIcon;
   final double? width;
   final bool? obscureText;
@@ -18,6 +18,7 @@ class CustomTextField extends StatelessWidget {
   final Color? fillColor;
   final int? maxLines;
   final double? height;
+  final EdgeInsetsGeometry? contentPadding;
 
   const CustomTextField({
     super.key,
@@ -30,7 +31,10 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.fillColor,
     this.maxLines,
-    this.height, this.onChanged, this.onFieldSubmitted,
+    this.height,
+    this.onChanged,
+    this.onFieldSubmitted,
+    this.hintStyle, this.contentPadding,
   });
 
   @override
@@ -52,13 +56,13 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           maintainHintHeight: true,
           hintText: hintText ?? "",
-          hintStyle: TextStyle(
+          hintStyle: hintStyle ?? TextStyle(
             fontSize: 15.sp,
             color: AppColors.black,
             fontWeight: FontWeightHelper.medium,
           ),
           suffixIcon: suffixIcon,
-          contentPadding: EdgeInsets.symmetric(
+          contentPadding: contentPadding ??  EdgeInsets.symmetric(
             horizontal: 18.w,
             vertical: 18.h,
           ),
@@ -79,7 +83,7 @@ class CustomTextField extends StatelessWidget {
   OutlineInputBorder buildOutlineInputBorder({Color? color}) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(8.r),
-      borderSide: BorderSide(color: color ?? AppColors.lightGrey, width: 1.w),
+      borderSide: BorderSide(color: color ?? AppColors.e6White, width: 1.w),
     );
   }
 }
