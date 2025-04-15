@@ -41,7 +41,6 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width ?? 331.w,
-      height: height ?? 48.h,
       child: TextFormField(
         controller: controller,
         onChanged: onChanged,
@@ -54,6 +53,8 @@ class CustomTextField extends StatelessWidget {
         validator: validator,
         maxLines: maxLines ?? 1,
         decoration: InputDecoration(
+          isDense: true,
+          disabledBorder: InputBorder.none,
           maintainHintHeight: true,
           hintText: hintText ?? "",
           hintStyle: hintStyle ?? TextStyle(
