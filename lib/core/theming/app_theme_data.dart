@@ -10,10 +10,11 @@ abstract class AppThemeData {
         ),
         fontFamily: "Readex Pro",
         appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.secondaryColor,
+          backgroundColor: AppColors.white,
           foregroundColor: AppColors.anotherBlackType,
           elevation: 0,
           centerTitle: false,
+          surfaceTintColor: AppColors.white,
         ),
         scaffoldBackgroundColor: AppColors.white,
         primaryColor: AppColors.primaryColor,

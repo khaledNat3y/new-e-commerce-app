@@ -71,6 +71,7 @@ flutter:
     - assets/images/
     - assets/svgs/bottom_nav_bar/active/
     - assets/svgs/bottom_nav_bar/inactive/
+    - assets/svgs/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
