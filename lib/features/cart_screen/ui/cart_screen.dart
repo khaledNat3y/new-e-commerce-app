@@ -18,7 +18,7 @@ class CartScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
         child: Column(
           children: [
-            buildCartScreenAppBar(context, onBackButtonPressed),
+            buildAppBar(context,"My Cart", onBackButtonPressed),
             verticalSpace(20),
             CartItemWidget(),
             ListTile(

@@ -10,7 +10,13 @@ class Assets {
   static const String fontsReadexProMedium = 'assets/fonts/ReadexPro-Medium.ttf';
   static const String fontsReadexProRegular = 'assets/fonts/ReadexPro-Regular.ttf';
   static const String fontsReadexProSemiBold = 'assets/fonts/ReadexPro-SemiBold.ttf';
+  static const String imagesAddress = 'assets/images/address.png';
+  static const String imagesBox = 'assets/images/box.png';
+  static const String imagesDetails = 'assets/images/details.png';
+  static const String imagesHeadPhone = 'assets/images/head_phone.png';
   static const String imagesImage = 'assets/images/image.png';
+  static const String imagesLogOut = 'assets/images/log_out.png';
+  static const String imagesQuestion = 'assets/images/question.png';
   static const String imagesTshirt = 'assets/images/tshirt.png';
   static const String inactiveCartInactive = 'assets/svgs/bottom_nav_bar/inactive/cart_inactive.svg';
   static const String inactiveHomeInactive = 'assets/svgs/bottom_nav_bar/inactive/home_inactive.svg';
