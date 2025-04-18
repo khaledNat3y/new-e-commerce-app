@@ -1,0 +1,62 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:new_e_commerce_app/core/theming/app_theme.dart';
+import 'package:new_e_commerce_app/features/main_screen/ui/screens/account_screen.dart';
+import 'package:new_e_commerce_app/features/cart_screen/ui/cart_screen.dart';
+import 'package:new_e_commerce_app/features/home_screen/ui/home_screen.dart';
+
+import '../../../core/theming/app_colors.dart';
+import '../../../generated/assets.dart';
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  int currentIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> screens = [
+      HomeScreen(),
+      CartScreen(onBackButtonPressed: (index) {
+        setState(() {
+          currentIndex = index;
+          log("$index");
+        });
+      },),
+      AccountScreen(),
+    ];
+    return Scaffold(
+      bottomNavigationBar: buildBottomNavigationBar(),
+      body: SafeArea(child: screens[currentIndex]),
+    );
+  }
+
+  BottomNavigationBar buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: AppColors.white,
+      fixedColor: AppColors.primaryColor,
+      selectedLabelStyle: AppTheme.font12BlackMedium,
+      unselectedItemColor: AppColors.textFieldGreyColor,
+      unselectedLabelStyle: AppTheme.font12GreyMedium,
+      showUnselectedLabels: true,
+      currentIndex: currentIndex,
+      onTap: (index) {
+        setState(() {
+          currentIndex = index;
+        });
+      },
+      items: [
+        BottomNavigationBarItem(icon: SvgPicture.asset(Assets.inactiveHomeInactive), activeIcon: SvgPicture.asset(Assets.activeHomeActive),label: "Home",),
+        BottomNavigationBarItem(icon: SvgPicture.asset(Assets.inactiveCartInactive),activeIcon: SvgPicture.asset(Assets.activeCartActive), label: "Cart"),
+        BottomNavigationBarItem(icon: SvgPicture.asset(Assets.inactiveUserInactive), activeIcon: SvgPicture.asset(Assets.activeUserActive), label: "Account"),
+      ],
+    );
+  }
+}

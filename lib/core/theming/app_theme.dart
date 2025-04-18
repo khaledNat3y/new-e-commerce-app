@@ -92,7 +92,13 @@ abstract class AppTheme {
     fontSize: 16.sp,
     fontWeight: FontWeightHelper.regular,
     fontFamily: AppFonts.primaryFont,
-    color: AppColors.grey,
+    color: AppColors.textFieldGreyColor,
+  );
+  static TextStyle font16GreyMedium = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeightHelper.medium,
+    fontFamily: AppFonts.primaryFont,
+    color: AppColors.textFieldGreyColor,
   );
 
   static TextStyle font14WhiteSemiBold = TextStyle(
@@ -107,5 +113,26 @@ abstract class AppTheme {
     fontWeight: FontWeightHelper.medium,
     fontFamily: AppFonts.primaryFont,
     color: AppColors.white,
+  );
+
+  static TextStyle font12GreyMedium = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.medium,
+    fontFamily: AppFonts.primaryFont,
+    color: AppColors.textFieldGreyColor,
+  );
+
+  static TextStyle font16BlackSemiBold = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeightHelper.semiBold,
+    fontFamily: AppFonts.primaryFont,
+    color: AppColors.black,
+  );
+
+  static TextStyle font24BlackSemiBold = TextStyle(
+    fontSize: 24.sp,
+    fontWeight: FontWeightHelper.semiBold,
+    fontFamily: AppFonts.primaryFont,
+    color: AppColors.anotherBlackType,
   );
 }

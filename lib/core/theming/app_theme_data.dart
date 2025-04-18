@@ -11,7 +11,7 @@ abstract class AppThemeData {
         fontFamily: "Readex Pro",
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.secondaryColor,
-          foregroundColor: AppColors.primaryColor,
+          foregroundColor: AppColors.anotherBlackType,
           elevation: 0,
           centerTitle: false,
         ),
