@@ -8,10 +8,11 @@ class CustomListTileWidget extends StatelessWidget {
   final String title;
   final String leadingAssetPath;
   final bool? enableBottomBorder;
+  final VoidCallback? onTap;
   const CustomListTileWidget({
     super.key,
     required this.title,
-    required this.leadingAssetPath, this.enableBottomBorder = false,
+    required this.leadingAssetPath, this.enableBottomBorder = false, this.onTap,
   });
 
   @override
@@ -19,6 +20,7 @@ class CustomListTileWidget extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.only(bottom: 12.h),
       shape: enableBottomBorder == true ? const Border(bottom: BorderSide(color: AppColors.lightGrey, width: 1)) : null,
+      onTap: onTap,
       leading: Image.asset(leadingAssetPath, width: 24, height: 24),
       title: Text(title, style: AppTheme.font16BlackRegular),
       trailing: IconButton(

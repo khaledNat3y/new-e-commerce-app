@@ -26,7 +26,7 @@ Future<void> launchURL(String url) async {
 }
 
 
-Row buildAppBar(BuildContext context, String title, void Function(int)? onBackButtonPressed) {
+Row buildAppBar(BuildContext context, String title, [void Function(int)? onBackButtonPressed]) {
   const int currentIndex = 0;
   return Row(
     children: [
