@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:new_e_commerce_app/core/helpers/spacing.dart';
 import '../theming/app_colors.dart';
 import '../theming/app_theme.dart';
 
@@ -14,6 +15,10 @@ class PrimaryButtonWidget extends StatelessWidget {
   final double? bordersRadius;
   final double? fontSize;
   final EdgeInsetsGeometry? padding;
+  final bool enablePrefixIcon;
+  final Icon? prefixIcon;
+  final Icon? suffixIcon;
+  final bool enableSuffixIcon;
 
   const PrimaryButtonWidget({
     super.key,
@@ -26,7 +31,7 @@ class PrimaryButtonWidget extends StatelessWidget {
     this.buttonColor,
     this.fontSize,
     this.padding,
-    this.buttonTextStyle,
+    this.buttonTextStyle, this.enablePrefixIcon = false, this.prefixIcon, this.suffixIcon, this.enableSuffixIcon = false,
   });
 
   @override
@@ -44,9 +49,20 @@ class PrimaryButtonWidget extends StatelessWidget {
           height ?? MediaQuery.sizeOf(context).height * 0.06635,
         ),
       ),
-      child: Text(
-        buttonText ?? "",
-        style: buttonTextStyle ?? AppTheme.font14WhiteSemiBold,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          enablePrefixIcon ? prefixIcon ?? Icon(Icons.shopping_bag_outlined ,color: textColor ?? AppColors.white, size: 24,)
+              : SizedBox.shrink(),
+          enablePrefixIcon ? horizontalSpace(10) : SizedBox.shrink(),
+          Text(
+            buttonText ?? "",
+            style: buttonTextStyle ?? AppTheme.font14WhiteSemiBold,
+          ),
+          enableSuffixIcon ? horizontalSpace(10) : SizedBox.shrink(),
+          enableSuffixIcon ? suffixIcon ?? Icon(Icons.arrow_forward ,color: textColor ?? AppColors.white, size: 24,)
+              : SizedBox.shrink(),
+        ],
       ),
     );
   }

@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final TextStyle? hintStyle;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
   final double? width;
   final bool? obscureText;
   final TextInputType? inputType;
@@ -34,7 +35,7 @@ class CustomTextField extends StatelessWidget {
     this.height,
     this.onChanged,
     this.onFieldSubmitted,
-    this.hintStyle, this.contentPadding,
+    this.hintStyle, this.contentPadding, this.prefixIcon,
   });
 
   @override
@@ -63,6 +64,7 @@ class CustomTextField extends StatelessWidget {
             fontWeight: FontWeightHelper.medium,
           ),
           suffixIcon: suffixIcon,
+          prefixIcon: prefixIcon,
           contentPadding: contentPadding ??  EdgeInsets.symmetric(
             horizontal: 18.w,
             vertical: 18.h,

@@ -1,4 +1,10 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:new_e_commerce_app/core/helpers/spacing.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../theming/app_colors.dart';
+import '../theming/app_theme.dart';
 
 /// Truncate a string to a maximum number of words
 String truncateToFirstNWords(String inputString, int wordLimit) {
@@ -17,4 +23,25 @@ Future<void> launchURL(String url) async {
   } else {
     throw 'Could not launch $url';
   }
+}
+
+
+Row buildCartScreenAppBar(BuildContext context, void Function(int) onBackButtonPressed) {
+  const int currentIndex = 0;
+  return Row(
+    children: [
+      IconButton(
+        onPressed: () {
+          onBackButtonPressed(currentIndex);
+        },
+        icon: Icon(
+          Icons.arrow_back,
+          color: AppColors.black,
+        ),
+        iconSize: 24,
+      ),
+      horizontalSpace(MediaQuery.sizeOf(context).width * 0.2),
+      Text("My Cart", style: AppTheme.font24BlackSemiBold),
+    ],
+  );
 }
