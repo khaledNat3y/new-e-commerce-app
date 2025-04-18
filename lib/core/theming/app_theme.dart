@@ -135,4 +135,11 @@ abstract class AppTheme {
     fontFamily: AppFonts.primaryFont,
     color: AppColors.anotherBlackType,
   );
+
+  static TextStyle font16ErrorColorRegular = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeightHelper.regular,
+    fontFamily: AppFonts.primaryFont,
+    color: AppColors.errorColor,
+  );
 }

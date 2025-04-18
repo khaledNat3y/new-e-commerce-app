@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:new_e_commerce_app/core/theming/app_theme.dart';
-import 'package:new_e_commerce_app/features/main_screen/ui/screens/account_screen.dart';
+import 'package:new_e_commerce_app/features/account_screen/ui/account_screen.dart';
 import 'package:new_e_commerce_app/features/cart_screen/ui/cart_screen.dart';
 import 'package:new_e_commerce_app/features/home_screen/ui/home_screen.dart';
 
@@ -29,7 +29,11 @@ class _MainScreenState extends State<MainScreen> {
           log("$index");
         });
       },),
-      AccountScreen(),
+      AccountScreen(onBackButtonPressed: (index){
+        setState(() {
+          currentIndex = index;
+        });
+      },),
     ];
     return Scaffold(
       bottomNavigationBar: buildBottomNavigationBar(),

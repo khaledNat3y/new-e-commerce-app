@@ -26,13 +26,13 @@ Future<void> launchURL(String url) async {
 }
 
 
-Row buildCartScreenAppBar(BuildContext context, void Function(int) onBackButtonPressed) {
+Row buildAppBar(BuildContext context, String title, void Function(int)? onBackButtonPressed) {
   const int currentIndex = 0;
   return Row(
     children: [
       IconButton(
         onPressed: () {
-          onBackButtonPressed(currentIndex);
+          if(onBackButtonPressed != null) onBackButtonPressed(currentIndex);
         },
         icon: Icon(
           Icons.arrow_back,
@@ -41,7 +41,7 @@ Row buildCartScreenAppBar(BuildContext context, void Function(int) onBackButtonP
         iconSize: 24,
       ),
       horizontalSpace(MediaQuery.sizeOf(context).width * 0.2),
-      Text("My Cart", style: AppTheme.font24BlackSemiBold),
+      Text(title, style: AppTheme.font24BlackSemiBold),
     ],
   );
 }
