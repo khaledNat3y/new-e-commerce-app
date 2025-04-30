@@ -41,16 +41,15 @@ class _SplashScreenState extends State<SplashScreen>
     await Future.delayed(duration);
       final String? userToken =
       await getIt<StorageHelper>().getToken();
-      if (!userToken.isNullOrEmpty()) {
+      if (!userToken.isNullOrEmpty() && mounted) {
         // isLoggedInUser = true;
         context.goNamed(Routes.mainScreen);
       } else {
         // isLoggedInUser = false;
-        context.goNamed(Routes.loginScreen);
+        mounted == true ? context.goNamed(Routes.loginScreen) : null;
       }
 
   }
-
   @override
   void dispose() {
     animationController.dispose();
