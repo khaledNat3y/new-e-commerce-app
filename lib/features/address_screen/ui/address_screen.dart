@@ -14,7 +14,7 @@ class AddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Address"),
+        title: const Text("Address"),
         centerTitle: true,
       ),
       body: Padding(
@@ -27,13 +27,13 @@ class AddressScreen extends StatelessWidget {
               verticalSpace(20),
               Text("Saved Address", style: AppTheme.font16BlackSemiBold,),
               verticalSpace(16),
-              CustomAddressWidget(title: "Home", subtitle: "925 S Chugach St #APT 10, Alas...", leadingAssetPath: Assets.imagesLocation,),
+              const CustomAddressWidget(title: "Home", subtitle: "925 S Chugach St #APT 10, Alas...", leadingAssetPath: Assets.imagesLocation,),
               verticalSpace(12),
-              CustomAddressWidget(title: "Office", subtitle: "2438 6th Ave, Ketchikan, Alaska 99901, USA", leadingAssetPath: Assets.imagesLocation,),
+              const CustomAddressWidget(title: "Office", subtitle: "2438 6th Ave, Ketchikan, Alaska 99901, USA", leadingAssetPath: Assets.imagesLocation,),
               verticalSpace(12),
-              CustomAddressWidget(title: "Apartment", subtitle: "2551 Vista Dr #B301, Juneau, Alaska 99801, USA", leadingAssetPath: Assets.imagesLocation,),
+              const CustomAddressWidget(title: "Apartment", subtitle: "2551 Vista Dr #B301, Juneau, Alaska 99801, USA", leadingAssetPath: Assets.imagesLocation,),
               verticalSpace(12),
-              CustomAddressWidget(title: "Parent’s House", subtitle: "4821 Ridge Top Cir, Anchorage, Alaska 99508, USA", leadingAssetPath: Assets.imagesLocation,),
+              const CustomAddressWidget(title: "Parent’s House", subtitle: "4821 Ridge Top Cir, Anchorage, Alaska 99508, USA", leadingAssetPath: Assets.imagesLocation,),
               verticalSpace(12),
 
 

@@ -19,13 +19,13 @@ class CustomListTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.only(bottom: 12.h),
-      shape: enableBottomBorder == true ? const Border(bottom: BorderSide(color: AppColors.lightGrey, width: 1)) : null,
+      shape: enableBottomBorder == true ? const Border(bottom: BorderSide(color: AppColors.lightGrey)) : null,
       onTap: onTap,
       leading: Image.asset(leadingAssetPath, width: 24, height: 24),
       title: Text(title, style: AppTheme.font16BlackRegular),
       trailing: IconButton(
         onPressed: () {},
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_forward_ios,
           color: AppColors.textFieldGreyColor,
           size: 24,

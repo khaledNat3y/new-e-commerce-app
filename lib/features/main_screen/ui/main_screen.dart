@@ -1,10 +1,16 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:new_e_commerce_app/core/di/dependency_injection.dart';
 import 'package:new_e_commerce_app/core/theming/app_theme.dart';
 import 'package:new_e_commerce_app/features/account_screen/ui/account_screen.dart';
+import 'package:new_e_commerce_app/features/cart_screen/logic/cart_cubit.dart';
 import 'package:new_e_commerce_app/features/cart_screen/ui/cart_screen.dart';
+import 'package:new_e_commerce_app/features/home_screen/data/repo/home_repo.dart';
+import 'package:new_e_commerce_app/features/home_screen/logic/categories_cubit.dart';
+import 'package:new_e_commerce_app/features/home_screen/logic/product_cubit.dart';
 import 'package:new_e_commerce_app/features/home_screen/ui/home_screen.dart';
 
 import '../../../core/theming/app_colors.dart';
@@ -21,8 +27,14 @@ class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens = [
-      HomeScreen(),
+    final List<Widget> screens = [
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => ProductCubit(getIt<HomeRepo>())),
+          BlocProvider(create: (context) => CategoriesCubit(getIt<HomeRepo>())),
+        ],
+  child: const HomeScreen(),
+),
       CartScreen(onBackButtonPressed: (index) {
         setState(() {
           currentIndex = index;
@@ -55,6 +67,9 @@ class _MainScreenState extends State<MainScreen> {
         setState(() {
           currentIndex = index;
         });
+        if(index == 1) {
+          context.read<CartCubit>().getUserCart();
+        }
       },
       items: [
         BottomNavigationBarItem(icon: SvgPicture.asset(Assets.inactiveHomeInactive), activeIcon: SvgPicture.asset(Assets.activeHomeActive),label: "Home",),

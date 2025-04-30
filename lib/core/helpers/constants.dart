@@ -1,12 +1,11 @@
-bool isFirstTime = true;
+bool isLoggedInUser = false;
 
 String lang = 'en';
 
 bool showTextFormField = false;
 
-
 class AppConstants {
-  static String appLanguage = 'en';
+  static const String appLanguage = 'en';
 }
 
 class SharedPrefKeys {

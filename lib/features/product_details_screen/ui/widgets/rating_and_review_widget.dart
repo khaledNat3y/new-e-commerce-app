@@ -5,17 +5,19 @@ import '../../../../core/theming/app_colors.dart';
 import '../../../../core/theming/app_theme.dart';
 
 class RatingAndReviewWidget extends StatelessWidget {
-  const RatingAndReviewWidget({super.key});
+  final double? rating;
+  final int? count;
+  const RatingAndReviewWidget({super.key, this.rating, this.count});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.star, color: AppColors.orange),
+        const Icon(Icons.star, color: AppColors.orange),
         horizontalSpace(4),
-        Text("4.5", style: AppTheme.font16BlackRegular),
+        Text(rating.toString(), style: AppTheme.font16BlackRegular),
         horizontalSpace(8),
-        Text("(12 reviews)", style: AppTheme.font16GreyMedium),
+        Text("(${count}reviews)", style: AppTheme.font16GreyMedium),
       ],
     );
   }
