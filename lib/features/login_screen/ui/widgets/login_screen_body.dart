@@ -34,13 +34,13 @@ class LoginScreenBody extends StatelessWidget {
               maxLines: 2,
             ),
             verticalSpace(24),
-            LoginForm(),
+            const LoginForm(),
             verticalSpace(290),
             Center(
               child: EndScreenRichText(
                 title: "Don’t have an account? ",
                 subtitle: "Join",
-                onTap: (){
+                onTap: () {
                   GoRouter.of(context).pushNamed(Routes.registerScreen);
                 },
               ),
@@ -52,4 +52,3 @@ class LoginScreenBody extends StatelessWidget {
     );
   }
 }
-

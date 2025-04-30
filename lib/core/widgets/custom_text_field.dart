@@ -56,7 +56,6 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           isDense: true,
           disabledBorder: InputBorder.none,
-          maintainHintHeight: true,
           hintText: hintText ?? "",
           hintStyle: hintStyle ?? TextStyle(
             fontSize: 15.sp,
@@ -69,7 +68,6 @@ class CustomTextField extends StatelessWidget {
             horizontal: 18.w,
             vertical: 18.h,
           ),
-          enabled: true,
           enabledBorder: buildOutlineInputBorder(),
           focusedBorder: buildOutlineInputBorder(),
           errorBorder: buildOutlineInputBorder(color: AppColors.errorColor),

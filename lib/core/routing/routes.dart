@@ -5,6 +5,6 @@ class Routes {
   static const String mainScreen = "/mainScreen";
   static const String productDetailsScreen = "/productDetailsScreen";
   static const String addressScreen = "/addressScreen";
-
+  static const String splashScreen = "/splashScreen";
 
 }

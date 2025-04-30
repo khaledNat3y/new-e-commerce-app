@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:new_e_commerce_app/core/helpers/spacing.dart';
 import 'package:new_e_commerce_app/core/theming/app_theme.dart';
 import 'package:new_e_commerce_app/core/widgets/custom_text_field.dart';
+import 'package:new_e_commerce_app/features/home_screen/logic/product_cubit.dart';
 import 'package:new_e_commerce_app/features/home_screen/ui/widgets/category_item_widget.dart';
-import 'package:new_e_commerce_app/features/home_screen/ui/widgets/product_grid_view.dart';
+import 'package:new_e_commerce_app/features/home_screen/ui/widgets/product_grid_view_bloc_builder.dart';
 
 import '../../../core/theming/app_colors.dart';
+import '../logic/categories_cubit.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String selectedCategory = "All";
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<CategoriesCubit>().getCategories();
+    context.read<ProductCubit>().getProducts();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +45,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               CustomTextField(
                 width: 281.w,
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.search,
                   color: AppColors.textFieldGreyColor,
                   size: 30,
@@ -46,31 +63,50 @@ class HomeScreen extends StatelessWidget {
                 ),
                 child: IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.tune_outlined, color: AppColors.white),
+                  icon: const Icon(Icons.tune_outlined, color: AppColors.white),
                 ),
               ),
             ],
           ),
         ),
         verticalSpace(16),
-        Padding(
-          padding: EdgeInsetsDirectional.only(start: 24.w),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                CategoryItemWidget(categoryName: "All"),
-                CategoryItemWidget(categoryName: "All"),
-                CategoryItemWidget(categoryName: "All"),
-                CategoryItemWidget(categoryName: "All"),
-                CategoryItemWidget(categoryName: "All"),
-                CategoryItemWidget(categoryName: "All"),
-              ],
-            ),
-          ),
+        BlocBuilder<CategoriesCubit, CategoriesState>(
+          builder: (context, state) {
+            if (state is CategoriesSuccess) {
+              return Padding(
+                padding: EdgeInsetsDirectional.only(start: 24.w),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children:
+                    state.categories.map((category) {
+                      return CategoryItemWidget(categoryName: category,
+                        onTap: () {
+                          setState(() {
+                            selectedCategory = category;
+                            if(selectedCategory == "All") {
+                              context.read<ProductCubit>().getProducts();
+                            }else {
+                              context.read<ProductCubit>().getProductsCategory(selectedCategory);
+                            }
+                          });
+                          // context.read<ProductCubit>().getProductsCategory(selectedCategory);
+                        },
+                        isSelected: selectedCategory == category,);
+                    }).toList(),
+                  ),
+                ),
+              );
+            }
+            return const SizedBox.shrink();
+          },
         ),
         verticalSpace(16),
-        ProductsGridView(),
+        ProductsGridViewBlocBuilder(selectedCategory: (value) {
+          setState(() {
+            selectedCategory = value;
+          });
+        }),
       ],
     );
   }

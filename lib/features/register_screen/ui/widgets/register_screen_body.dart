@@ -43,7 +43,7 @@ class RegisterScreenBody extends StatelessWidget {
                         maxLines: 2,
                       ),
                       verticalSpace(24.h),
-                      RegisterForm(),
+                      const RegisterForm(),
                     ],
                   ),
                   Center(
