@@ -1,6 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_e_commerce_app/features/cart_screen/data/repo/cart_repo.dart';
 
 import '../../home_screen/data/models/products_model.dart';
