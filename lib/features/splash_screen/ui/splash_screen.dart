@@ -37,16 +37,16 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> waitAnimationAndNavigate() async {
-    const duration = Duration(seconds: 1, milliseconds: 500 );
+    const duration = Duration(seconds: 6);
     await Future.delayed(duration);
       final String? userToken =
       await getIt<StorageHelper>().getToken();
-      if (!userToken.isNullOrEmpty() && mounted) {
+      if (!userToken.isNullOrEmpty()) {
         // isLoggedInUser = true;
         context.goNamed(Routes.mainScreen);
       } else {
         // isLoggedInUser = false;
-        mounted == true ? context.goNamed(Routes.loginScreen) : null;
+        context.goNamed(Routes.loginScreen);
       }
 
   }
