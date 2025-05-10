@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:curved_navigation_bar/curved_navigation_bar.dart'; // Add this import
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,6 +26,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
+  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
@@ -33,48 +36,116 @@ class _MainScreenState extends State<MainScreen> {
           BlocProvider(create: (context) => ProductCubit(getIt<HomeRepo>())),
           BlocProvider(create: (context) => CategoriesCubit(getIt<HomeRepo>())),
         ],
-  child: const HomeScreen(),
-),
-      CartScreen(onBackButtonPressed: (index) {
-        setState(() {
-          currentIndex = index;
-          log("$index");
-        });
-      },),
-      AccountScreen(onBackButtonPressed: (index){
-        setState(() {
-          currentIndex = index;
-        });
-      },),
+        child: const HomeScreen(),
+      ),
+      CartScreen(
+        onBackButtonPressed: (index) {
+          setState(() {
+            currentIndex = index;
+            log("$index");
+            _bottomNavigationKey.currentState?.setPage(index);
+          });
+        },
+      ),
+      AccountScreen(
+        onBackButtonPressed: (index) {
+          setState(() {
+            currentIndex = index;
+            // Update curved navigation bar when back button is pressed
+            _bottomNavigationKey.currentState?.setPage(index);
+          });
+        },
+      ),
     ];
+
     return Scaffold(
-      bottomNavigationBar: buildBottomNavigationBar(),
+      bottomNavigationBar: buildCurvedNavigationBar(),
+backgroundColor: AppColors.white,
       body: SafeArea(child: screens[currentIndex]),
     );
   }
 
-  BottomNavigationBar buildBottomNavigationBar() {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: AppColors.white,
-      fixedColor: AppColors.primaryColor,
-      selectedLabelStyle: AppTheme.font12BlackMedium,
-      unselectedItemColor: AppColors.textFieldGreyColor,
-      unselectedLabelStyle: AppTheme.font12GreyMedium,
-      showUnselectedLabels: true,
-      currentIndex: currentIndex,
+  // Replace BottomNavigationBar with CurvedNavigationBar
+  CurvedNavigationBar buildCurvedNavigationBar() {
+    return CurvedNavigationBar(
+      key: _bottomNavigationKey,
+      index: currentIndex,
+      height: 60, // Height of the navigation bar
+      backgroundColor: AppColors.white, // Background color (visible in the curve)
+      color: AppColors.primaryColor, // Navigation bar color
+      buttonBackgroundColor: AppColors.primaryColor, // Selected item background color
+      animationCurve: Curves.easeInOut,
+      animationDuration: const Duration(milliseconds: 300),
       onTap: (index) {
         setState(() {
           currentIndex = index;
         });
-        if(index == 1) {
+        if (index == 1) {
           context.read<CartCubit>().getUserCart();
         }
       },
       items: [
-        BottomNavigationBarItem(icon: SvgPicture.asset(Assets.inactiveHomeInactive), activeIcon: SvgPicture.asset(Assets.activeHomeActive),label: "Home",),
-        BottomNavigationBarItem(icon: SvgPicture.asset(Assets.inactiveCartInactive),activeIcon: SvgPicture.asset(Assets.activeCartActive), label: "Cart"),
-        BottomNavigationBarItem(icon: SvgPicture.asset(Assets.inactiveUserInactive), activeIcon: SvgPicture.asset(Assets.activeUserActive), label: "Account"),
+        /// Home Icon
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SvgPicture.asset(
+                currentIndex == 0 ? Assets.activeHomeActive : Assets.inactiveHomeInactive,
+                height: 22,
+              ),
+              if (currentIndex == 0)
+                Text(
+                  'Home',
+                  style: AppTheme.font16WhiteMedium.copyWith(
+                    fontSize: 12,
+
+                  ),
+                ),
+            ],
+          ),
+        ),
+        /// Cart Icon
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SvgPicture.asset(
+                currentIndex == 1 ? Assets.activeCartActive : Assets.inactiveCartInactive,
+                height: 22,
+              ),
+              if (currentIndex == 1)
+                Text(
+                  'Cart',
+                  style: AppTheme.font16WhiteMedium.copyWith(
+                    fontSize: 12,
+                  ),
+                ),
+            ],
+          ),
+        ),
+        // Account Icon
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SvgPicture.asset(
+                currentIndex == 2 ? Assets.activeUserActive : Assets.inactiveUserInactive,
+                height: 22,
+              ),
+              if (currentIndex == 2)
+                Text(
+                  'Account',
+                  style: AppTheme.font16WhiteMedium.copyWith(
+                    fontSize: 12,
+                  ),
+                ),
+            ],
+          ),
+        ),
       ],
     );
   }
