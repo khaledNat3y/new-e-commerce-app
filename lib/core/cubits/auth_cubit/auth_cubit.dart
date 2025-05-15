@@ -13,10 +13,10 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit(this.authRepo) : super(AuthInitial());
 
-  Future<void> login(String userName, String password) async {
+  Future<void> login(String email, String password) async {
     emit(AuthLoading());
     final Either<String, LoginResponseModel> response = await authRepo.login(
-      userName,
+      email,
       password,
     );
     response.fold(
@@ -29,13 +29,19 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-
-  Future<void> register(String userName, String email, String password) async {
+  Future<void> register(
+    String userName,
+    String email,
+    String password,
+    String rePassword,
+    String phone,
+  ) async {
     emit(AuthLoading());
-    final Either<String, RegisterResponseModel> response = await authRepo.register(userName, email, password);
+    final Either<RegisterResponseModelError, RegisterResponseModel> response =
+        await authRepo.register(userName, email, password, rePassword, phone);
     response.fold(
       (error) {
-        emit(AuthError(error));
+        emit(AuthError(error.message));
       },
       (response) {
         emit(AuthRegisterSuccess(response));

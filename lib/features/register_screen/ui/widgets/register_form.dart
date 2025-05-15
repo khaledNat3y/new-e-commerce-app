@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:new_e_commerce_app/core/cubits/auth_cubit/auth_cubit.dart';
+import 'package:new_e_commerce_app/core/helpers/safe_tap.dart';
 
 import '../../../../core/helpers/functions.dart';
 import '../../../../core/helpers/spacing.dart';
@@ -24,18 +25,20 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   bool isObscureText = true;
   final formKey = GlobalKey<FormState>();
-  late TextEditingController fullNameController;
+  late TextEditingController nameController;
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController confirmPasswordController;
+  late TextEditingController phoneController;
 
   @override
   void initState() {
     super.initState();
-    fullNameController = TextEditingController();
+    nameController = TextEditingController();
     emailController = TextEditingController();
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
+    phoneController = TextEditingController();
   }
 
   @override
@@ -70,7 +73,7 @@ class _RegisterFormState extends State<RegisterForm> {
               Text("Full Name", style: AppTheme.font16BlackMedium),
               verticalSpace(8),
               CustomTextField(
-                controller: fullNameController,
+                controller: nameController,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return 'Please enter your full name';
@@ -192,6 +195,30 @@ class _RegisterFormState extends State<RegisterForm> {
                           ),
                 ),
               ),
+              verticalSpace(16),
+              Text("Phone", style: AppTheme.font16BlackMedium),
+              verticalSpace(8),
+              CustomTextField(
+                controller: phoneController,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter your phone number';
+                  }
+                  if(value.length < 11) {
+                    return 'Please enter a valid phone number';
+                  }
+                  return null;
+                },
+                hintText: "Phone number",
+                hintStyle: AppTheme.font16GreyRegular.copyWith(
+                  color: AppColors.textFieldGreyColor,
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 20.w,
+                  vertical: 15.h,
+                ),
+                fillColor: AppColors.white,
+              ),
               verticalSpace(55),
               Padding(
                 padding: EdgeInsets.only(left: 8.h, right: 16.w),
@@ -204,11 +231,17 @@ class _RegisterFormState extends State<RegisterForm> {
                   buttonTextStyle: AppTheme.font14WhiteMedium,
                   onPress: () {
                     if (formKey.currentState!.validate()) {
-                      context.read<AuthCubit>().register(
-                        fullNameController.text,
-                        emailController.text,
-                        passwordController.text,
-                      );
+                      SafeOnTap.execute(context: context, onTap: () async {
+                        context.read<AuthCubit>().register(
+                          nameController.text,
+                          emailController.text,
+                          passwordController.text,
+                          confirmPasswordController.text,
+                          phoneController.text,
+                        );
+                      }, onNoConnection: () {
+                        showAnimatedSnackDialog(context, message: "No internet connection! Please reconnect and try again!", type: AnimatedSnackBarType.warning,);
+                      });
                     }
                   },
                 ),

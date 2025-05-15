@@ -52,7 +52,7 @@ class AppRouter {
           name: Routes.productDetailsScreen,
           path: Routes.productDetailsScreen,
           builder: (context, state) {
-            final extra = state.extra as ProductsModel;
+            final extra = state.extra as ProductDatum;
             return BlocProvider(
               create: (context) => CartCubit(getIt<CartRepo>()),
               child: ProductDetailsScreen(product: extra,),

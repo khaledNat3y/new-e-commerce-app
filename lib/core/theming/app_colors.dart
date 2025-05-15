@@ -17,3 +17,5 @@ abstract class AppColors {
   static const Color orange = Color(0xffFFA928);
   static Color transparent = Colors.transparent;
 }
+
+

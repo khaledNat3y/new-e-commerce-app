@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:new_e_commerce_app/core/helpers/spacing.dart';
 import 'package:new_e_commerce_app/core/theming/app_theme.dart';
 import 'package:new_e_commerce_app/core/widgets/custom_text_field.dart';
+import 'package:new_e_commerce_app/features/home_screen/data/models/categories_model.dart';
 import 'package:new_e_commerce_app/features/home_screen/logic/product_cubit.dart';
 import 'package:new_e_commerce_app/features/home_screen/ui/widgets/category_item_widget.dart';
 import 'package:new_e_commerce_app/features/home_screen/ui/widgets/product_grid_view_bloc_builder.dart';
@@ -73,27 +76,42 @@ class _HomeScreenState extends State<HomeScreen> {
         BlocBuilder<CategoriesCubit, CategoriesState>(
           builder: (context, state) {
             if (state is CategoriesSuccess) {
+              final List<Datum>? categories = state.categoryModel.data;
               return Padding(
                 padding: EdgeInsetsDirectional.only(start: 24.w),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children:
-                    state.categories.map((category) {
-                      return CategoryItemWidget(categoryName: category,
+                        categories!.map((category) {
+
+                      return CategoryItemWidget(categoryName: category.name ?? "All",
                         onTap: () {
                           setState(() {
-                            selectedCategory = category;
+                            selectedCategory = category.name ?? "All";
                             if(selectedCategory == "All") {
                               context.read<ProductCubit>().getProducts();
                             }else {
-                              context.read<ProductCubit>().getProductsCategory(selectedCategory);
+                              log(category.id.toString());
+                              context.read<ProductCubit>().getProductsCategory(category.id ?? "");
                             }
                           });
                           // context.read<ProductCubit>().getProductsCategory(selectedCategory);
                         },
-                        isSelected: selectedCategory == category,);
+                        isSelected: selectedCategory == category.name,);
                     }).toList(),
+                  ),
+                ),
+              );
+            }
+            if(state is CategoriesError) {
+              return Padding(
+                padding: EdgeInsetsDirectional.only(start: 24.w),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children:
+                    List.generate(6, (index) => CategoryItemWidget(categoryName: state.error, isSelected: false,)),
                   ),
                 ),
               );
@@ -111,4 +129,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

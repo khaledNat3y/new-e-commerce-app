@@ -13,13 +13,13 @@ class HomeRepo {
 
   HomeRepo(this.dioHelper);
 
-  Future<Either<String, List<ProductsModel>>> getProducts() async {
+  Future<Either<String, ProductsModel>> getProducts() async {
     try {
       final Response response = await dioHelper.getRequest(
-        endPoint: ApiEndpoints.getAllProductsEndPoint,
+        endPoint: ApiEndpoints.getAllProductsFromRouteApi,
       );
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        final List<ProductsModel> products = productsModelFromMap(response.data);
+        final ProductsModel products = ProductsModel.fromJson(response.data);
         return Right(products);
       } else {
         return Left(response.toString());
@@ -30,14 +30,14 @@ class HomeRepo {
     }
   }
 
-  Future<Either<String, List<ProductsModel>>> getProductsCategory(String category,) async {
+  Future<Either<String, ProductsModel>> getProductsCategory(String categoryId,) async {
     try {
       final Response response = await dioHelper.getRequest(
-        endPoint: "${ApiEndpoints.categoryProducts}/$category",
-        query: {"category": category},
+        endPoint: ApiEndpoints.getAllProductsFromRouteApi,
+        query: {"category[in]": categoryId},
       );
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        final List<ProductsModel> products = productsModelFromMap(response.data);
+        final products = ProductsModel.fromJson(response.data);
         return Right(products);
       } else {
         return Left(response.toString());
@@ -49,20 +49,21 @@ class HomeRepo {
   }
 
 
-  Future<Either<String, List<String>>> getCategories() async {
+  Future<Either<String, CategoriesModel>> getCategories() async {
     try {
       final Response response = await dioHelper.getRequest(
-        endPoint: ApiEndpoints.getCategoriesEndPoint,);
+        endPoint: ApiEndpoints.getCategoriesRouteEndPoint,
+      );
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        final List<String> categories = categoriesModelFromMap(response.data);
-        categories.insert(0, ("All"));
-        return Right(categories);
+        final CategoriesModel categoryModel = CategoriesModel.fromMap(response.data);
+        categoryModel.data?.insert(0, Datum(name: "All"));
+        return Right(categoryModel);
       } else {
         return Left(response.toString());
       }
     } catch (e) {
       log("Unexpected error: $e");
-      return const Left("Unexpected error occurred");
+      return const Left("unexpected error occurred");
     }
   }
 

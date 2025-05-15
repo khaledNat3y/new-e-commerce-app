@@ -9,8 +9,13 @@ final class ProductLoading extends ProductState {}
 
 
 final class ProductSuccess extends ProductState {
-  final List<ProductsModel> products;
+  final ProductsModel products;
   ProductSuccess(this.products);
+}
+
+final class GetCategoriesSuccess extends ProductState {
+  final CategoriesModel products;
+  GetCategoriesSuccess(this.products);
 }
 
 
@@ -18,4 +23,3 @@ final class ProductError extends ProductState {
   final String error;
   ProductError(this.error);
 }
-

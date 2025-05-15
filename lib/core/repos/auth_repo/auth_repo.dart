@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:new_e_commerce_app/core/di/dependency_injection.dart';
 import 'package:new_e_commerce_app/core/helpers/constants.dart';
 import 'package:new_e_commerce_app/core/helpers/shared_pref_helper.dart';
@@ -14,24 +15,26 @@ import '../../networking/api_endpoints.dart';
 
 class AuthRepo {
   final DioHelper dioHelper;
+  final InternetConnectionChecker connectionChecker;
 
-  AuthRepo(this.dioHelper);
+  AuthRepo(this.dioHelper, this.connectionChecker);
 
-  Future<Either<String, LoginResponseModel>> login(
-    String userName,
-    String password,
-  ) async {
+  Future<Either<String, LoginResponseModel>> login(String userName,
+      String password,) async {
     try {
       final Response response = await dioHelper.postRequest(
-        endPoint: ApiEndpoints.authLoginEndPoint,
-        data: {"username": userName, "password": password},
+        endPoint: ApiEndpoints.loginRouteEndPoint,
+        data: {"email": userName, "password": password},
       );
-      if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        final LoginResponseModel loginResponseModel = LoginResponseModel.fromJson(response.data);
-        if(loginResponseModel.token != null) {
+      if (await connectionChecker.hasConnection &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        final LoginResponseModel loginResponseModel =
+        LoginResponseModel.fromMap(response.data);
+        if (loginResponseModel.token != null) {
           await getIt<StorageHelper>().saveToken(loginResponseModel.token!);
           return Right(loginResponseModel);
-        }else {
+        } else {
           return const Left("Token is null");
         }
       } else {
@@ -43,25 +46,45 @@ class AuthRepo {
     }
   }
 
-  Future<Either<String, RegisterResponseModel>> register(
-    String userName,
-    String email,
-    String password,
-  ) async {
+  Future<Either<RegisterResponseModelError, RegisterResponseModel>> register(
+      String userName,
+      String email,
+      String password,
+      String rePassword,
+      String phone) async {
     try {
       final Response response = await dioHelper.postRequest(
-        endPoint: ApiEndpoints.registerEndPoint,
-        data: {"username": userName, "email": email, "password": password},
+        endPoint: ApiEndpoints.registerRouteEndPoint,
+        data: {
+          "name": userName,
+          "email": email,
+          "password": password,
+          "rePassword": rePassword,
+          "phone": phone
+        },
       );
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        await SharedPrefHelper.setSecuredString(SharedPrefKeys.userToken, response.data['token']);
-        return Right(RegisterResponseModel.fromJson(response.data));
+        final RegisterResponseModel registerResponseModel =
+        RegisterResponseModel.fromMap(response.data);
+        if (registerResponseModel.token != null) {
+          await getIt<StorageHelper>().saveToken(registerResponseModel.token!);
+          return Right(registerResponseModel);
+        } else {
+          return Left(
+            RegisterResponseModelError(
+              statusMsg: "fail",
+              message: "Token is null",
+            ),
+          );
+        }
       } else {
-        return Left(response.toString());
+        return Left(response.data);
       }
     } catch (e) {
       log("Unexpected error: $e");
-      return const Left("Unexpected error occurred");
+      return Left(
+        RegisterResponseModelError(statusMsg: "fail", message: e.toString()),
+      );
     }
   }
 }

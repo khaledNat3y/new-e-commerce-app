@@ -19,7 +19,7 @@ final class AuthRegisterSuccess extends AuthState {
 }
 
 final class AuthError extends AuthState {
-  final String errorMessage;
+  final String? errorMessage;
   AuthError(this.errorMessage);
 }
 

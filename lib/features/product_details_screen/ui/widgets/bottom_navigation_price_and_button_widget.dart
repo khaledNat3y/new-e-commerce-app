@@ -13,7 +13,7 @@ import '../../../../core/theming/app_theme.dart';
 import '../../../../core/widgets/primary_button_widget.dart';
 
 class BottomNavigationPriceAndButtonWidget extends StatelessWidget {
-  final ProductsModel product;
+  final ProductDatum product;
   const BottomNavigationPriceAndButtonWidget({super.key, required this.product});
 
   @override
@@ -35,7 +35,7 @@ class BottomNavigationPriceAndButtonWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text("Price", style: AppTheme.font16GreyRegular),
-              Text(r"$1,190", style: AppTheme.font24BlackSemiBold),
+              Text("\$ ${product.price}", style: AppTheme.font24BlackSemiBold),
             ],
           ),
           horizontalSpace(16),
@@ -71,7 +71,7 @@ class BottomNavigationPriceAndButtonWidget extends StatelessWidget {
                 buttonText: "Add to Cart",
                 enablePrefixIcon: true,
                 onPress: () {
-                  context.read<CartCubit>().addToCart(product: product, quantity: 1);
+                  context.read<CartCubit>().addToCart(product: product, productId: product.id);
                 },
               );
             },
