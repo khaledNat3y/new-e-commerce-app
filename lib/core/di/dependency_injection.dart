@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:new_e_commerce_app/core/helpers/storage_helper.dart';
 import 'package:new_e_commerce_app/core/networking/dio_helper.dart';
 import 'package:new_e_commerce_app/core/repos/auth_repo/auth_repo.dart';
@@ -17,7 +18,7 @@ Future<void> setupGetIt() async {
   /// Dio & ApiService
   getIt.registerSingleton<DioHelper>(dio);
   /// Repos
-  getIt.registerLazySingleton(()=> AuthRepo(getIt<DioHelper>()));
+  getIt.registerLazySingleton(()=> AuthRepo(getIt<DioHelper>(), getIt<InternetConnectionChecker>()));
   getIt.registerLazySingleton(()=> HomeRepo(getIt<DioHelper>()));
   getIt.registerLazySingleton(()=> CartRepo(getIt<DioHelper>()));
   ///Cubits
@@ -27,4 +28,6 @@ Future<void> setupGetIt() async {
   getIt.registerFactory(()=> CartCubit(getIt<CartRepo>()));
   /// Storage
   getIt.registerLazySingleton(()=> StorageHelper());
+  ///Internet Connection Checker
+  getIt.registerLazySingleton(() => InternetConnectionChecker.createInstance());
 }

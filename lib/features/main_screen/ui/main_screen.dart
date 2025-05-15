@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart'; // Add this import
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       bottomNavigationBar: buildCurvedNavigationBar(),
-backgroundColor: AppColors.white,
+      backgroundColor: AppColors.white,
       body: SafeArea(child: screens[currentIndex]),
     );
   }
@@ -70,10 +71,14 @@ backgroundColor: AppColors.white,
     return CurvedNavigationBar(
       key: _bottomNavigationKey,
       index: currentIndex,
-      height: 60, // Height of the navigation bar
-      backgroundColor: AppColors.white, // Background color (visible in the curve)
-      color: AppColors.primaryColor, // Navigation bar color
-      buttonBackgroundColor: AppColors.primaryColor, // Selected item background color
+      height: 60,
+      // Height of the navigation bar
+      backgroundColor: AppColors.white,
+      // Background color (visible in the curve)
+      color: AppColors.primaryColor,
+      // Navigation bar color
+      buttonBackgroundColor: AppColors.primaryColor,
+      // Selected item background color
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
       onTap: (index) {
@@ -92,20 +97,20 @@ backgroundColor: AppColors.white,
             mainAxisSize: MainAxisSize.min,
             children: [
               SvgPicture.asset(
-                currentIndex == 0 ? Assets.activeHomeActive : Assets.inactiveHomeInactive,
+                currentIndex == 0
+                    ? Assets.activeHomeActive
+                    : Assets.inactiveHomeInactive,
                 height: 22,
               ),
               if (currentIndex == 0)
                 Text(
                   'Home',
-                  style: AppTheme.font16WhiteMedium.copyWith(
-                    fontSize: 12,
-
-                  ),
+                  style: AppTheme.font16WhiteMedium.copyWith(fontSize: 12),
                 ),
             ],
           ),
         ),
+
         /// Cart Icon
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -113,15 +118,15 @@ backgroundColor: AppColors.white,
             mainAxisSize: MainAxisSize.min,
             children: [
               SvgPicture.asset(
-                currentIndex == 1 ? Assets.activeCartActive : Assets.inactiveCartInactive,
+                currentIndex == 1
+                    ? Assets.activeCartActive
+                    : Assets.inactiveCartInactive,
                 height: 22,
               ),
               if (currentIndex == 1)
                 Text(
                   'Cart',
-                  style: AppTheme.font16WhiteMedium.copyWith(
-                    fontSize: 12,
-                  ),
+                  style: AppTheme.font16WhiteMedium.copyWith(fontSize: 12),
                 ),
             ],
           ),
@@ -133,15 +138,15 @@ backgroundColor: AppColors.white,
             mainAxisSize: MainAxisSize.min,
             children: [
               SvgPicture.asset(
-                currentIndex == 2 ? Assets.activeUserActive : Assets.inactiveUserInactive,
+                currentIndex == 2
+                    ? Assets.activeUserActive
+                    : Assets.inactiveUserInactive,
                 height: 22,
               ),
               if (currentIndex == 2)
                 Text(
                   'Account',
-                  style: AppTheme.font16WhiteMedium.copyWith(
-                    fontSize: 12,
-                  ),
+                  style: AppTheme.font16WhiteMedium.copyWith(fontSize: 12),
                 ),
             ],
           ),

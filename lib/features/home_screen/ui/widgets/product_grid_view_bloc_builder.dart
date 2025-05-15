@@ -7,20 +7,33 @@ import '../../logic/product_cubit.dart';
 
 class ProductsGridViewBlocBuilder extends StatelessWidget {
   final ValueChanged<String> selectedCategory;
-  const ProductsGridViewBlocBuilder({super.key, required this.selectedCategory});
+
+  const ProductsGridViewBlocBuilder({
+    super.key,
+    required this.selectedCategory,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductCubit, ProductState>(
       builder: (context, state) {
-        if(state is ProductSuccess) {
-          return ProductsGridView(products: state.products, selectedCategory: (value) {
-            selectedCategory(value);
-          },);
-        }else if(state is ProductLoading) {
-          return const Center(child: LoadingWidget(),);
+        if (state is ProductSuccess) {
+          if (state.products.data.isEmpty) {
+            return const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(child: Text("No products found"))
+              ],
+            );
+          }
+          return ProductsGridView(
+            products: state.products,
+            selectedCategory: (value) {
+              selectedCategory(value);
+            },
+          );
         }
-        return const SizedBox.shrink();
+        return const Center(child: LoadingWidget());
       },
     );
   }

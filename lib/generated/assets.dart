@@ -23,6 +23,7 @@ class Assets {
   static const String inactiveCartInactive = 'assets/svgs/bottom_nav_bar/inactive/cart_inactive.svg';
   static const String inactiveHomeInactive = 'assets/svgs/bottom_nav_bar/inactive/home_inactive.svg';
   static const String inactiveUserInactive = 'assets/svgs/bottom_nav_bar/inactive/user_inactive.svg';
+  static const String lottieAnimatedSplash = 'assets/lottie/animated_splash.json';
   static const String lottieLoadingAnimation = 'assets/lottie/loading_animation.json';
   static const String svgsWarning = 'assets/svgs/warning.svg';
 

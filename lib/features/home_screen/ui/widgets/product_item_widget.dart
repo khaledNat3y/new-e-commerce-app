@@ -8,14 +8,15 @@ import '../../../../core/theming/app_theme.dart';
 
 class ProductItemWidget extends StatelessWidget {
   final String title;
-  final double price;
+  final num price;
   final String imageUrl;
+  final String id;
 
   const ProductItemWidget({
     super.key,
     required this.title,
     required this.price,
-    required this.imageUrl,
+    required this.imageUrl, required this.id,
   });
 
   @override
@@ -31,7 +32,7 @@ class ProductItemWidget extends StatelessWidget {
             child: Hero(
               transitionOnUserGestures: true,
               placeholderBuilder: (context, size, child) => buildShimmer(),
-              tag: "product$title",
+              tag: "product$id",
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
                 fit: BoxFit.fill,

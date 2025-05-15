@@ -6,10 +6,11 @@ import 'package:new_e_commerce_app/core/theming/app_colors.dart';
 import 'package:new_e_commerce_app/features/home_screen/data/models/products_model.dart';
 import 'package:new_e_commerce_app/features/product_details_screen/ui/widgets/bottom_navigation_price_and_button_widget.dart';
 import 'package:new_e_commerce_app/features/product_details_screen/ui/widgets/rating_and_review_widget.dart';
+import '../../../core/theming/app_color.dart';
 import '../../../core/theming/app_theme.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  final ProductsModel product;
+  final ProductDatum product;
 
   const ProductDetailsScreen({super.key, required this.product});
 
@@ -33,9 +34,9 @@ class ProductDetailsScreen extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.r),
                 child: Hero(
-                  tag: "product${product.title}",
+                  tag: "product${product.id}",
                   child: CachedNetworkImage(
-                    imageUrl: product.image ?? "",
+                    imageUrl: product.imageCover ?? "",
                     fit: BoxFit.fill,
                     placeholder: (context, url) => const CircularProgressIndicator(color: AppColors.primaryColor,),
                     errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -45,7 +46,7 @@ class ProductDetailsScreen extends StatelessWidget {
               verticalSpace(12),
               Text(product.title ?? "", style: AppTheme.font24BlackSemiBold),
               verticalSpace(13),
-              RatingAndReviewWidget(rating: product.rating!.rate , count: product.rating!.count,),
+              RatingAndReviewWidget(rating: product.ratingsAverage , count: product.quantity,),
               verticalSpace(13),
               Text(
                 product.description ?? "",

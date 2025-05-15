@@ -30,7 +30,7 @@ Row buildAppBar(
   BuildContext context,
   String title, [
   void Function(int)? onBackButtonPressed,
-]) {
+    ]) {
   const int currentIndex = 0;
   return Row(
     children: [
@@ -47,7 +47,8 @@ Row buildAppBar(
   );
 }
 
-void showAnimatedSnackDialog(BuildContext context,{
+void showAnimatedSnackDialog(
+  BuildContext context, {
   String? message,
   AnimatedSnackBarType? type,
 }) {

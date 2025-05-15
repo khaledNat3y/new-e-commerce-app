@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:go_transitions/go_transitions.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:new_e_commerce_app/core/theming/app_color.dart';
 import 'app_colors.dart';
 
 abstract class AppThemeData {
   static ThemeData lightTheme(BuildContext context) {
     return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      extensions: [
+        AppColor(
+          primary: AppColors.primaryColor,
+          secondary: AppColors.secondaryColor,
+        ),
+      ],
       textTheme: GoogleFonts.readexProTextTheme(Theme.of(context).textTheme),
       pageTransitionsTheme: PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
           TargetPlatform.android: GoTransitions.slide.toRight,
-          TargetPlatform.iOS: GoTransitions.slide.toRight ,
+          TargetPlatform.iOS: GoTransitions.slide.toRight,
         },
       ),
       fontFamily: "Readex Pro",
@@ -39,5 +48,12 @@ abstract class AppThemeData {
     );
   }
 
-  static final darkTheme = ThemeData();
+  static final darkTheme = ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.dark,
+    extensions: [
+      AppColor(primary: Colors.black12, secondary: Colors.white24),
+    ],
+  );
 }
+

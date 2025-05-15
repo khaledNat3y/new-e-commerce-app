@@ -7,6 +7,7 @@ import 'package:new_e_commerce_app/core/cubits/auth_cubit/auth_cubit.dart';
 import 'package:new_e_commerce_app/core/helpers/functions.dart';
 import 'package:new_e_commerce_app/core/widgets/loading_widget.dart';
 
+import '../../../../core/helpers/safe_tap.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/theming/app_colors.dart';
@@ -136,12 +137,25 @@ class _LoginFormState extends State<LoginForm> {
                   buttonText: "Sign In",
                   buttonTextStyle: AppTheme.font14WhiteMedium,
                   onPress: () {
-                    if (formKey.currentState!.validate()) {
-                      context.read<AuthCubit>().login(
-                        emailController.text,
-                        passwordController.text,
-                      );
-                    }
+                    if (!formKey.currentState!.validate()) return;
+                    SafeOnTap.execute(
+                      context: context,
+                      onTap: () {
+                        // this only runs if we really have Internet
+                        return context.read<AuthCubit>().login(
+                          emailController.text,
+                          passwordController.text,
+                        );
+                      },
+                      onNoConnection: () {
+                        // optional: override default snackbar with something custom
+                        showAnimatedSnackDialog(
+                          context,
+                          message: "Can’t log in without Internet!",
+                          type: AnimatedSnackBarType.warning,
+                        );
+                      },
+                    );
                   },
                 ),
               ),

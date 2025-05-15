@@ -1,10 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:new_e_commerce_app/core/routing/app_router.dart';
 import 'package:new_e_commerce_app/core/theming/app_theme_data.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class StyliqApp extends StatelessWidget {
+  const StyliqApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: AppThemeData.lightTheme(context),
           title: "E-Commerce App",
-
         );
       },
     );

@@ -10,7 +10,7 @@ import 'package:new_e_commerce_app/features/home_screen/logic/product_cubit.dart
 import 'package:new_e_commerce_app/features/home_screen/ui/widgets/product_item_widget.dart';
 
 class ProductsGridView extends StatefulWidget {
-  final List<ProductsModel> products;
+  final ProductsModel products;
   final ValueChanged<String> selectedCategory;
 
   const ProductsGridView({
@@ -36,7 +36,7 @@ class _ProductsGridViewState extends State<ProductsGridView> {
         },
         child: AnimationLimiter(
           child: GridView.builder(
-            itemCount: widget.products.length,
+            itemCount: widget.products.data.length,
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -55,13 +55,14 @@ class _ProductsGridViewState extends State<ProductsGridView> {
                     child: GestureDetector(
                       onTap:
                           () => context.pushNamed(
-                            Routes.productDetailsScreen,
-                            extra: widget.products[index],
-                          ),
+                        Routes.productDetailsScreen,
+                        extra: widget.products.data[index],
+                      ),
                       child: ProductItemWidget(
-                        title: widget.products[index].title ?? "",
-                        price: widget.products[index].price ?? 0,
-                        imageUrl: widget.products[index].image ?? "",
+                        id: widget.products.data[index].id,
+                        title: widget.products.data[index].title,
+                        price: widget.products.data[index].price,
+                        imageUrl: widget.products.data[index].imageCover,
                       ),
                     ),
                   ),
